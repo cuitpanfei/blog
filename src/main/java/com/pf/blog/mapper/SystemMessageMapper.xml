@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pf.blog.dao.SystemMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.pf.blog.entity.SystemMessage" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.SystemMessageWithBLOBs" extends="BaseResultMap" >
+    <result column="system_topic" property="systemTopic" jdbcType="LONGVARCHAR" />
+    <result column="system_content" property="systemContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, send_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    system_topic, system_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from systemmessage
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from systemmessage
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pf.blog.entity.SystemMessageWithBLOBs" >
+    insert into systemmessage (id, send_time, system_topic, 
+      system_content)
+    values (#{id,jdbcType=INTEGER}, #{sendTime,jdbcType=TIMESTAMP}, #{systemTopic,jdbcType=LONGVARCHAR}, 
+      #{systemContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.SystemMessageWithBLOBs" >
+    insert into systemmessage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sendTime != null" >
+        send_time,
+      </if>
+      <if test="systemTopic != null" >
+        system_topic,
+      </if>
+      <if test="systemContent != null" >
+        system_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sendTime != null" >
+        #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="systemTopic != null" >
+        #{systemTopic,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="systemContent != null" >
+        #{systemContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.SystemMessageWithBLOBs" >
+    update systemmessage
+    <set >
+      <if test="sendTime != null" >
+        send_time = #{sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="systemTopic != null" >
+        system_topic = #{systemTopic,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="systemContent != null" >
+        system_content = #{systemContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.SystemMessageWithBLOBs" >
+    update systemmessage
+    set send_time = #{sendTime,jdbcType=TIMESTAMP},
+      system_topic = #{systemTopic,jdbcType=LONGVARCHAR},
+      system_content = #{systemContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pf.blog.entity.SystemMessage" >
+    update systemmessage
+    set send_time = #{sendTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

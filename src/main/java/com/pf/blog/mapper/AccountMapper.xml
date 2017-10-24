@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pf.blog.dao.AccountMapper" >
+  <resultMap id="BaseResultMap" type="com.pf.blog.entity.Account" >
+    <id column="account_id" property="accountId" jdbcType="INTEGER" />
+    <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR" />
+    <result column="user_lock" property="userLock" jdbcType="CHAR" />
+    <result column="user_power" property="userPower" jdbcType="VARCHAR" />
+    <result column="user_register_time" property="userRegisterTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.AccountWithBLOBs" extends="BaseResultMap" >
+    <result column="account_number" property="accountNumber" jdbcType="LONGVARCHAR" />
+    <result column="account_password" property="accountPassword" jdbcType="LONGVARCHAR" />
+    <result column="Head_portrait" property="headPortrait" jdbcType="LONGVARCHAR" />
+    <result column="user_description" property="userDescription" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    account_id, last_login_ip, user_lock, user_power, user_register_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    account_number, account_password, Head_portrait, user_description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from account
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </select>
+  <select id="login" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from account
+    where account_number = #{accountNumber,jdbcType=LONGVARCHAR} and account_password = #{accountPassword,jdbcType=LONGVARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from account
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pf.blog.entity.AccountWithBLOBs" >
+    insert into account (account_id, last_login_ip, user_lock, 
+      user_power, account_number,
+      account_password, Head_portrait, 
+      user_description)
+    values (#{accountId,jdbcType=INTEGER}, #{lastLoginIp,jdbcType=VARCHAR}, #{userLock,jdbcType=CHAR}, 
+      #{userPower,jdbcType=VARCHAR}, #{accountNumber,jdbcType=LONGVARCHAR},
+      #{accountPassword,jdbcType=LONGVARCHAR}, #{headPortrait,jdbcType=LONGVARCHAR}, 
+      #{userDescription,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.AccountWithBLOBs" >
+    insert into account
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="lastLoginIp != null" >
+        last_login_ip,
+      </if>
+      <if test="userLock != null" >
+        user_lock,
+      </if>
+      <if test="userPower != null" >
+        user_power,
+      </if>
+      <if test="accountNumber != null" >
+        account_number,
+      </if>
+      <if test="accountPassword != null" >
+        account_password,
+      </if>
+      <if test="headPortrait != null" >
+        Head_portrait,
+      </if>
+      <if test="userDescription != null" >
+        user_description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="accountId != null" >
+        #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginIp != null" >
+        #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userLock != null" >
+        #{userLock,jdbcType=CHAR},
+      </if>
+      <if test="userPower != null" >
+        #{userPower,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNumber != null" >
+        #{accountNumber,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="accountPassword != null" >
+        #{accountPassword,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="headPortrait != null" >
+        #{headPortrait,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userDescription != null" >
+        #{userDescription,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.AccountWithBLOBs" >
+    update account
+    <set >
+      <if test="lastLoginIp != null" >
+        last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userLock != null" >
+        user_lock = #{userLock,jdbcType=CHAR},
+      </if>
+      <if test="userPower != null" >
+        user_power = #{userPower,jdbcType=VARCHAR},
+      </if>
+      <if test="userRegisterTime != null" >
+        user_register_time = #{userRegisterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountNumber != null" >
+        account_number = #{accountNumber,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="accountPassword != null" >
+        account_password = #{accountPassword,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="headPortrait != null" >
+        Head_portrait = #{headPortrait,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="userDescription != null" >
+        user_description = #{userDescription,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.AccountWithBLOBs" >
+    update account
+    set last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      user_lock = #{userLock,jdbcType=CHAR},
+      user_power = #{userPower,jdbcType=VARCHAR},
+      user_register_time = #{userRegisterTime,jdbcType=TIMESTAMP},
+      account_number = #{accountNumber,jdbcType=LONGVARCHAR},
+      account_password = #{accountPassword,jdbcType=LONGVARCHAR},
+      Head_portrait = #{headPortrait,jdbcType=LONGVARCHAR},
+      user_description = #{userDescription,jdbcType=LONGVARCHAR}
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pf.blog.entity.Account" >
+    update account
+    set last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      user_lock = #{userLock,jdbcType=CHAR},
+      user_power = #{userPower,jdbcType=VARCHAR},
+      user_register_time = #{userRegisterTime,jdbcType=TIMESTAMP}
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </update>
+</mapper>

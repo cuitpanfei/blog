@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pf.blog.dao.ReplayMapper" >
+  <resultMap id="BaseResultMap" type="com.pf.blog.entity.Replay" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="account_id" property="accountId" jdbcType="INTEGER" />
+    <result column="Acc_account_id" property="accAccountId" jdbcType="INTEGER" />
+    <result column="replay_time" property="replayTime" jdbcType="TIMESTAMP" />
+    <result column="replay_typr" property="replayTypr" jdbcType="INTEGER" />
+    <result column="article_id" property="articleId" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.Replay" extends="BaseResultMap" >
+    <result column="replay_content" property="replayContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, account_id, Acc_account_id, replay_time, replay_typr, article_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    replay_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from replay
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from replay
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pf.blog.entity.Replay" >
+    insert into replay (id, account_id, Acc_account_id, 
+      replay_time, replay_typr, article_id, 
+      replay_content)
+    values (#{id,jdbcType=INTEGER}, #{accountId,jdbcType=INTEGER}, #{accAccountId,jdbcType=INTEGER}, 
+      #{replayTime,jdbcType=TIMESTAMP}, #{replayTypr,jdbcType=INTEGER}, #{articleId,jdbcType=INTEGER}, 
+      #{replayContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.Replay" >
+    insert into replay
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="accAccountId != null" >
+        Acc_account_id,
+      </if>
+      <if test="replayTime != null" >
+        replay_time,
+      </if>
+      <if test="replayTypr != null" >
+        replay_typr,
+      </if>
+      <if test="articleId != null" >
+        article_id,
+      </if>
+      <if test="replayContent != null" >
+        replay_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="accAccountId != null" >
+        #{accAccountId,jdbcType=INTEGER},
+      </if>
+      <if test="replayTime != null" >
+        #{replayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replayTypr != null" >
+        #{replayTypr,jdbcType=INTEGER},
+      </if>
+      <if test="articleId != null" >
+        #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="replayContent != null" >
+        #{replayContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.Replay" >
+    update replay
+    <set >
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="accAccountId != null" >
+        Acc_account_id = #{accAccountId,jdbcType=INTEGER},
+      </if>
+      <if test="replayTime != null" >
+        replay_time = #{replayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="replayTypr != null" >
+        replay_typr = #{replayTypr,jdbcType=INTEGER},
+      </if>
+      <if test="articleId != null" >
+        article_id = #{articleId,jdbcType=INTEGER},
+      </if>
+      <if test="replayContent != null" >
+        replay_content = #{replayContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.Replay" >
+    update replay
+    set account_id = #{accountId,jdbcType=INTEGER},
+      Acc_account_id = #{accAccountId,jdbcType=INTEGER},
+      replay_time = #{replayTime,jdbcType=TIMESTAMP},
+      replay_typr = #{replayTypr,jdbcType=INTEGER},
+      article_id = #{articleId,jdbcType=INTEGER},
+      replay_content = #{replayContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pf.blog.entity.Replay" >
+    update replay
+    set account_id = #{accountId,jdbcType=INTEGER},
+      Acc_account_id = #{accAccountId,jdbcType=INTEGER},
+      replay_time = #{replayTime,jdbcType=TIMESTAMP},
+      replay_typr = #{replayTypr,jdbcType=INTEGER},
+      article_id = #{articleId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

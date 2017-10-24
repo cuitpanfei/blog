@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pf.blog.dao.FriendlyLinkMapper" >
+  <resultMap id="BaseResultMap" type="com.pf.blog.entity.FriendlyLink" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="show_order" property="showOrder" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.FriendlyLinkWithBLOBs" extends="BaseResultMap" >
+    <result column="url" property="url" jdbcType="LONGVARCHAR" />
+    <result column="logo" property="logo" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, show_order
+  </sql>
+  <sql id="Blob_Column_List" >
+    url, logo
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from friendly_link
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from friendly_link
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pf.blog.entity.FriendlyLinkWithBLOBs" >
+    insert into friendly_link (id, name, show_order, 
+      url, logo)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{showOrder,jdbcType=VARCHAR}, 
+      #{url,jdbcType=LONGVARCHAR}, #{logo,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.FriendlyLinkWithBLOBs" >
+    insert into friendly_link
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="showOrder != null" >
+        show_order,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="showOrder != null" >
+        #{showOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.FriendlyLinkWithBLOBs" >
+    update friendly_link
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="showOrder != null" >
+        show_order = #{showOrder,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.FriendlyLinkWithBLOBs" >
+    update friendly_link
+    set name = #{name,jdbcType=VARCHAR},
+      show_order = #{showOrder,jdbcType=VARCHAR},
+      url = #{url,jdbcType=LONGVARCHAR},
+      logo = #{logo,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pf.blog.entity.FriendlyLink" >
+    update friendly_link
+    set name = #{name,jdbcType=VARCHAR},
+      show_order = #{showOrder,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

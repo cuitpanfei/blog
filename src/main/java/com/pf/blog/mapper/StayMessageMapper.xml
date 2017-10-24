@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pf.blog.dao.StayMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.pf.blog.entity.StayMessage" >
+    <id column="stay_message_id" property="stayMessageId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="ipv4_info" property="ipv4Info" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.StayMessageWithBLOBs" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="Email" property="email" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    stay_message_id, create_time, ipv4_info
+  </sql>
+  <sql id="Blob_Column_List" >
+    content, Email
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from stay_message
+    where stay_message_id = #{stayMessageId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from stay_message
+    where stay_message_id = #{stayMessageId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pf.blog.entity.StayMessageWithBLOBs" >
+    insert into stay_message (stay_message_id, create_time, ipv4_info, 
+      content, Email)
+    values (#{stayMessageId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{ipv4Info,jdbcType=VARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR}, #{email,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.StayMessageWithBLOBs" >
+    insert into stay_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stayMessageId != null" >
+        stay_message_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="ipv4Info != null" >
+        ipv4_info,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="email != null" >
+        Email,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stayMessageId != null" >
+        #{stayMessageId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ipv4Info != null" >
+        #{ipv4Info,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.StayMessageWithBLOBs" >
+    update stay_message
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ipv4Info != null" >
+        ipv4_info = #{ipv4Info,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="email != null" >
+        Email = #{email,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where stay_message_id = #{stayMessageId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.StayMessageWithBLOBs" >
+    update stay_message
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      ipv4_info = #{ipv4Info,jdbcType=VARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR},
+      Email = #{email,jdbcType=LONGVARCHAR}
+    where stay_message_id = #{stayMessageId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pf.blog.entity.StayMessage" >
+    update stay_message
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      ipv4_info = #{ipv4Info,jdbcType=VARCHAR}
+    where stay_message_id = #{stayMessageId,jdbcType=INTEGER}
+  </update>
+</mapper>

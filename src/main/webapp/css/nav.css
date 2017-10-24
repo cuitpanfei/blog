@@ -1,0 +1,29 @@
+@charset "utf-8";
+#user-info:hover > .user-menu > li{
+display: block;
+}
+.user-menu{
+    /*display: none;*/
+    padding: 0px;
+    position: absolute;
+    background-color:#bbbaba;
+    z-index:1000;
+}
+.user-menu li{
+    text-align: left;
+    padding:5px;
+    display: none;
+    background-color: rgba(75, 75, 75, 0);
+    width: 133px;
+    height:30px;
+    border-bottom: solid 1px;
+}
+.user-menu li{
+    float: left;
+}
+.user-menu li>div>a{
+    color:#fff;
+}
+.user-menu li:first-child:hover li{
+    display: block;
+}

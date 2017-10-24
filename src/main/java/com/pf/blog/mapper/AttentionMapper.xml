@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pf.blog.dao.AttentionMapper" >
+  <resultMap id="BaseResultMap" type="com.pf.blog.entity.Attention" >
+    <id column="attention_id" property="attentionId" jdbcType="INTEGER" />
+    <result column="account_id" property="accountId" jdbcType="INTEGER" />
+    <result column="attention_type" property="attentionType" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    attention_id, account_id, attention_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from attention
+    where attention_id = #{attentionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from attention
+    where attention_id = #{attentionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pf.blog.entity.Attention" >
+    insert into attention (attention_id, account_id, attention_type
+      )
+    values (#{attentionId,jdbcType=INTEGER}, #{accountId,jdbcType=INTEGER}, #{attentionType,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.Attention" >
+    insert into attention
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="attentionId != null" >
+        attention_id,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="attentionType != null" >
+        attention_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="attentionId != null" >
+        #{attentionId,jdbcType=INTEGER},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="attentionType != null" >
+        #{attentionType,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.Attention" >
+    update attention
+    <set >
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="attentionType != null" >
+        attention_type = #{attentionType,jdbcType=CHAR},
+      </if>
+    </set>
+    where attention_id = #{attentionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pf.blog.entity.Attention" >
+    update attention
+    set account_id = #{accountId,jdbcType=INTEGER},
+      attention_type = #{attentionType,jdbcType=CHAR}
+    where attention_id = #{attentionId,jdbcType=INTEGER}
+  </update>
+</mapper>

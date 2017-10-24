@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pf.blog.dao.AdMapper" >
+  <resultMap id="BaseResultMap" type="com.pf.blog.entity.Ad" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="media_type" property="mediaType" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="click_count" property="clickCount" jdbcType="INTEGER" />
+    <result column="enabled" property="enabled" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.AdWithBLOBs" extends="BaseResultMap" >
+    <result column="link" property="link" jdbcType="LONGVARCHAR" />
+    <result column="code" property="code" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, media_type, name, click_count, enabled
+  </sql>
+  <sql id="Blob_Column_List" >
+    link, code
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from ad
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from ad
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pf.blog.entity.AdWithBLOBs" >
+    insert into ad (id, media_type, name, 
+      click_count, enabled, link, 
+      code)
+    values (#{id,jdbcType=INTEGER}, #{mediaType,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{clickCount,jdbcType=INTEGER}, #{enabled,jdbcType=VARCHAR}, #{link,jdbcType=LONGVARCHAR}, 
+      #{code,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.AdWithBLOBs" >
+    insert into ad
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mediaType != null" >
+        media_type,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="clickCount != null" >
+        click_count,
+      </if>
+      <if test="enabled != null" >
+        enabled,
+      </if>
+      <if test="link != null" >
+        link,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="mediaType != null" >
+        #{mediaType,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="clickCount != null" >
+        #{clickCount,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null" >
+        #{enabled,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        #{link,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.AdWithBLOBs" >
+    update ad
+    <set >
+      <if test="mediaType != null" >
+        media_type = #{mediaType,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="clickCount != null" >
+        click_count = #{clickCount,jdbcType=INTEGER},
+      </if>
+      <if test="enabled != null" >
+        enabled = #{enabled,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        link = #{link,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.AdWithBLOBs" >
+    update ad
+    set media_type = #{mediaType,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      enabled = #{enabled,jdbcType=VARCHAR},
+      link = #{link,jdbcType=LONGVARCHAR},
+      code = #{code,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pf.blog.entity.Ad" >
+    update ad
+    set media_type = #{mediaType,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      enabled = #{enabled,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pf.blog.dao.ScheduleMapper" >
+  <resultMap id="BaseResultMap" type="com.pf.blog.entity.Schedule" >
+    <id column="schedule_id" property="scheduleId" jdbcType="INTEGER" />
+    <result column="creat_date" property="creatDate" jdbcType="TIMESTAMP" />
+    <result column="account_id" property="accountId" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.Schedule" extends="BaseResultMap" >
+    <result column="schedule_content" property="scheduleContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    schedule_id, creat_date, account_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    schedule_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from schedule
+    where schedule_id = #{scheduleId,jdbcType=INTEGER}
+  </select>
+  <select id="selectOneUserAllEvents" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from schedule
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from schedule
+    where schedule_id = #{scheduleId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.pf.blog.entity.Schedule" >
+    insert into schedule (schedule_id, creat_date, account_id, 
+      schedule_content)
+    values (#{scheduleId,jdbcType=INTEGER}, #{creatDate,jdbcType=TIMESTAMP}, #{accountId,jdbcType=INTEGER}, 
+      #{scheduleContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.Schedule" >
+    insert into schedule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="scheduleId != null" >
+        schedule_id,
+      </if>
+      <if test="creatDate != null" >
+        creat_date,
+      </if>
+      <if test="accountId != null" >
+        account_id,
+      </if>
+      <if test="scheduleContent != null" >
+        schedule_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="scheduleId != null" >
+        #{scheduleId,jdbcType=INTEGER},
+      </if>
+      <if test="creatDate != null" >
+        #{creatDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="scheduleContent != null" >
+        #{scheduleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.Schedule" >
+    update schedule
+    <set >
+      <if test="creatDate != null" >
+        creat_date = #{creatDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="accountId != null" >
+        account_id = #{accountId,jdbcType=INTEGER},
+      </if>
+      <if test="scheduleContent != null" >
+        schedule_content = #{scheduleContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where schedule_id = #{scheduleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.Schedule" >
+    update schedule
+    set creat_date = #{creatDate,jdbcType=TIMESTAMP},
+      account_id = #{accountId,jdbcType=INTEGER},
+      schedule_content = #{scheduleContent,jdbcType=LONGVARCHAR}
+    where schedule_id = #{scheduleId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pf.blog.entity.Schedule" >
+    update schedule
+    set creat_date = #{creatDate,jdbcType=TIMESTAMP},
+      account_id = #{accountId,jdbcType=INTEGER}
+    where schedule_id = #{scheduleId,jdbcType=INTEGER}
+  </update>
+</mapper>
