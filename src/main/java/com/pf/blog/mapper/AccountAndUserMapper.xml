@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pf.blog.dao.AccountAndUserMapper" >
+  <resultMap id="BaseResultMap" type="com.pf.blog.entity.AccountAndUser" >
+    <result column="account_id" property="accountId" jdbcType="INTEGER" />
+    <result column="last_login_ip" property="lastLoginIp" jdbcType="VARCHAR" />
+    <result column="user_lock" property="userLock" jdbcType="CHAR" />
+    <result column="user_power" property="userPower" jdbcType="VARCHAR" />
+    <result column="user_register_time" property="userRegisterTime" jdbcType="TIMESTAMP" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.withblobs.AccountAndUserWithBLOBs" extends="BaseResultMap" >
+    <result column="account_number" property="accountNumber" jdbcType="LONGVARCHAR" />
+    <result column="account_password" property="accountPassword" jdbcType="LONGVARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="Head_portrait" property="headPortrait" jdbcType="LONGVARCHAR" />
+    <result column="user_description" property="userDescription" jdbcType="LONGVARCHAR" />
+    <result column="hobbies" property="hobbies" jdbcType="LONGVARCHAR" />
+    <result column="bathday" property="bathday" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    account_id, last_login_ip, user_lock, user_power, user_register_time, sex, age
+  </sql>
+  <sql id="Blob_Column_List" >
+    account_number, account_password, username, Head_portrait, user_description, hobbies, bathday
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from accountAnduser
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </select>
+  <select id="login" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from accountAnduser
+
+    <trim prefix="where" prefixOverrides="and|or">
+        <if test="accountNumber!=null">
+          and account_number = #{accountNumber,jdbcType=LONGVARCHAR}
+        </if>
+        <if test="username!=null">
+          or username = #{username,jdbcType=VARCHAR}
+        </if>
+        <if test="accountPassword!=null">
+          and account_password = password(#{accountPassword,jdbcType=LONGVARCHAR})
+        </if>
+    </trim>
+  </select>
+  <select id="adminLogin" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from accountAnduser
+
+    <trim prefix="where" prefixOverrides="and|or">
+        <if test="accountNumber!=null">
+          and account_number = #{accountNumber,jdbcType=LONGVARCHAR}
+        </if>
+        <if test="username!=null">
+          or username = #{username,jdbcType=VARCHAR}
+        </if>
+        <if test="accountPassword!=null">
+          and account_password = password(#{accountPassword,jdbcType=LONGVARCHAR})
+        </if>
+          and user_power = 1
+    </trim>
+  </select>
+
+</mapper>

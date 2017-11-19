@@ -1,8 +1,10 @@
 package com.pf.blog.dao;
 
 import com.pf.blog.entity.FriendlyLink;
-import com.pf.blog.entity.FriendlyLinkWithBLOBs;
+import com.pf.blog.entity.withblobs.FriendlyLinkWithBLOBs;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface FriendlyLinkMapper {
     int deleteByPrimaryKey(Integer id);
 

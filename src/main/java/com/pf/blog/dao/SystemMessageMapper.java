@@ -1,8 +1,10 @@
 package com.pf.blog.dao;
 
 import com.pf.blog.entity.SystemMessage;
-import com.pf.blog.entity.SystemMessageWithBLOBs;
+import com.pf.blog.entity.withblobs.SystemMessageWithBLOBs;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface SystemMessageMapper {
     int deleteByPrimaryKey(Integer id);
 

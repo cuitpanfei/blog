@@ -5,7 +5,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="send_time" property="sendTime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.SystemMessageWithBLOBs" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.withblobs.SystemMessageWithBLOBs" extends="BaseResultMap" >
     <result column="system_topic" property="systemTopic" jdbcType="LONGVARCHAR" />
     <result column="system_content" property="systemContent" jdbcType="LONGVARCHAR" />
   </resultMap>
@@ -27,13 +27,13 @@
     delete from systemmessage
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pf.blog.entity.SystemMessageWithBLOBs" >
+  <insert id="insert" parameterType="com.pf.blog.entity.withblobs.SystemMessageWithBLOBs" >
     insert into systemmessage (id, send_time, system_topic, 
       system_content)
     values (#{id,jdbcType=INTEGER}, #{sendTime,jdbcType=TIMESTAMP}, #{systemTopic,jdbcType=LONGVARCHAR}, 
       #{systemContent,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pf.blog.entity.SystemMessageWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.withblobs.SystemMessageWithBLOBs" >
     insert into systemmessage
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -64,7 +64,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.SystemMessageWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.withblobs.SystemMessageWithBLOBs" >
     update systemmessage
     <set >
       <if test="sendTime != null" >
@@ -79,7 +79,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.SystemMessageWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.withblobs.SystemMessageWithBLOBs" >
     update systemmessage
     set send_time = #{sendTime,jdbcType=TIMESTAMP},
       system_topic = #{systemTopic,jdbcType=LONGVARCHAR},

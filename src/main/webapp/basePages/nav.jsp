@@ -17,9 +17,9 @@
                     <li id="for-search"><input name="search" type="text"/> <i
                             class="fa fa-search"></i></li>
                     <li><a
-                            href="${pageContext.request.contextPath}/login.jsp?name=login-box"><i
+                            href="${pageContext.request.contextPath}/user/login.action"><i
                             class="fa fa-user"></i>&nbsp;登录</a></li>
-                    <li><a href="${pageContext.request.contextPath}/login.jsp"><i
+                    <li><a href="${pageContext.request.contextPath}/user/reg.action"><i
                             class="fa fa-user-plus"></i>&nbsp;注册</a></li>
                 </ul>
                 <ul id="is-login" class="nav navbar-nav pull-right">
@@ -27,12 +27,12 @@
                             class="fa fa-search"></i></li>
                     <li id="user-info">
                         <a href="javascript:;"><i
-                                class="fa fa-user"></i>&nbsp;${userinfo.user.userName}</a>
+                                class="fa fa-user"></i>&nbsp;${userinfo.username}</a>
                         <ul class="user-menu">
                             <li>
                                 <div>
                                     <a href="${pageContext.request.contextPath}/user/userInfo.action">
-                                        <i class="fa fa-user"></i>&nbsp;${userinfo.user.userName}
+                                        <i class="fa fa-user"></i>&nbsp;${userinfo.username}
                                     </a>
                                 </div>
                             </li>

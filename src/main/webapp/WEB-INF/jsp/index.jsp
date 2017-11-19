@@ -18,15 +18,8 @@
     <!--css样式引入标签-->
     <%@include file="/basePages/links.html"%>
     <%@include file="/basePages/scripts.html"%>
+    <%@include file="/basePages/jalendarJS.html"%>
 
-    <script id="jalendarUtil" src="${pageContext.request.contextPath}/js/jalendar.min.js"></script>
-    <script src="${pageContext.request.contextPath}/js/jslendaeUtil.js"></script>
-    <script src="${pageContext.request.contextPath}/js/functions.js"></script>
-    <script type="text/javascript">
-        var user = "${userinfo.user.userName}";
-        var _contextPath = "${pageContext.request.contextPath}";
-    </script>
-    <script src="${pageContext.request.contextPath}/js/utils.js"></script>
     <style type="text/css" media="screen">
     </style>
 </head>
@@ -185,8 +178,6 @@
             <div class="col-lg-3 col-md-4 page-right">
                 <div id="" class="">
                     <div id="yourId" class="jalendar">
-                        <!-- 登陆后ajax添加 start 下面是测试数据 -->
-                        <!-- 登陆后ajax添加 end -->
                     </div>
                     <p></p>
                     <img src="holder.js/292x600" alt="">
@@ -211,10 +202,12 @@
                     <h3>留言:</h3>
                     <input type="text" class="text" value="Name"
                            onfocus="this.value = '';"
-                           onblur="if (this.value == '') {this.value = 'Name';}"> <input
-                        type="text" class="text" value="Email" onfocus="this.value = '';"
-                        onblur="if (this.value == '') {this.value = 'Email';}">
-                    <textarea name="Message" onfocus="this.value = '';"
+                           onblur="if (this.value == '') {this.value = 'Name';}">
+                    <input type="text" class="text" value="Email"
+                           onfocus="this.value = '';"
+                           onblur="if (this.value == '') {this.value = 'Email';}">
+                    <textarea name="Message" value="Message"
+                              onfocus="this.value = '';"
                               onblur="if (this.value == '') {this.value = 'Message';}"></textarea>
                     <input type="submit" value="Send">
                 </div>

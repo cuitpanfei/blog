@@ -1,7 +1,9 @@
 package com.pf.blog.dao;
 
 import com.pf.blog.entity.Attention;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface AttentionMapper {
     int deleteByPrimaryKey(Integer attentionId);
 

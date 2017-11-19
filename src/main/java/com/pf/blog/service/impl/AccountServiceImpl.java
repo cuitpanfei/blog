@@ -1,40 +1,32 @@
 package com.pf.blog.service.impl;
 
-import com.pf.blog.bean.AccountAndUser;
-import com.pf.blog.bean.UserInfoBean;
+import com.pf.blog.dao.AccountAndUserMapper;
 import com.pf.blog.dao.AccountMapper;
 import com.pf.blog.dao.UserMapper;
-import com.pf.blog.entity.AccountWithBLOBs;
-import com.pf.blog.entity.User;
-import com.pf.blog.entity.UserWithBLOBs;
+import com.pf.blog.entity.withblobs.AccountAndUserWithBLOBs;
+import com.pf.blog.entity.withblobs.AccountWithBLOBs;
+import com.pf.blog.entity.withblobs.UserWithBLOBs;
 import com.pf.blog.service.IAccountService;
 import com.pf.blog.service.impl.business.AccountBusiness;
-import com.pf.blog.util.Util;
-import com.pf.blog.util.custom.exception.AccountException;
-import org.apache.log4j.Logger;
+import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.Serializable;
-import java.util.Date;
-
-import static com.pf.blog.util.COMM.LOGIN_ERROR;
+import static com.pf.util.COMM.LOGIN_ERROR;
+import static com.pf.util.COMM.LOGIN_PLEASE;
+import static com.pf.util.StringUtil.isNotEmpty;
+import static com.pf.util.Util.getIp;
 
 @Service("userAccountService")
+@Log4j
 public class AccountServiceImpl extends BaseServiceImpl implements IAccountService {
     @Autowired
     private AccountMapper accountDao;
     @Autowired
+    private AccountAndUserMapper accountAndUserDao;
+    @Autowired
     private UserMapper userDao;
-
-    @Autowired
-    private HttpSession session;
-
-    @Autowired
-    private HttpServletRequest request;
 
     private AccountBusiness accountBusiness = new AccountBusiness();
 
@@ -52,12 +44,25 @@ public class AccountServiceImpl extends BaseServiceImpl implements IAccountServi
     /**
      * 注册账户信息
      */
-    public int reg(UserInfoBean userInfoBean) {
-        AccountAndUser accountAndUser = new AccountAndUser(new AccountWithBLOBs(),new UserWithBLOBs());
-        accountAndUser.getUser().setUsername(userInfoBean.getUsername());
-        accountBusiness.initAccount4InsertByUserInfoBean(accountAndUser.getAccount(),userInfoBean);
-        insertUser(accountAndUser.getUser());
-        return insert(accountAndUser.getAccount());
+    public int reg(AccountAndUserWithBLOBs userInfoBean) {
+        try {
+            accountBusiness.beforReg(userInfoBean);
+            insertUser(userInfoBean.userGet());
+            return insert(userInfoBean.accountGet());
+        }catch (Exception e){//插入数据遇见异常，删除脏数据
+            UserWithBLOBs user = this.userDao.selectByPrimaryKey4Account(userInfoBean.getAccountId());
+            AccountWithBLOBs account = this.accountDao.selectByPrimaryKey(userInfoBean.getAccountId());
+
+            //由于用户信息是根据账号ID查出来的，可能查出非脏数据
+            if(user!=null&&user.equals(userInfoBean.userGet())){
+                this.userDao.deleteByPrimaryKey(user.getUserid());
+            }
+
+            if(account!=null){
+                this.userDao.deleteByPrimaryKey(account.getAccountId());
+            }
+        }
+        return -1;
     }
 
     /**
@@ -71,20 +76,28 @@ public class AccountServiceImpl extends BaseServiceImpl implements IAccountServi
      * 用户登陆
      */
     @Transactional
-    public AccountAndUser login(UserInfoBean userInfoBean) {
-        AccountWithBLOBs account = this.accountDao.login(userInfoBean.getEmail(), userInfoBean.getPassword());
-        AccountAndUser accountAndUser = new AccountAndUser(account,new UserWithBLOBs());
+    public AccountAndUserWithBLOBs login(AccountAndUserWithBLOBs accountAndUser) {
+        boolean hasError = false;
         try {
-            accountBusiness.initUser(accountAndUser,this);
-            session.invalidate();
-            session.setAttribute("userinfo",accountAndUser);
-            LOGGER.info("加载用户信息成功，"+accountAndUser.toString());
-        } catch (AccountException e) {
-            LOGGER.info("加载用户信息失败，"+accountAndUser.toString());
-            accountAndUser.setUser(null);
-            request.setAttribute("error_msg", LOGIN_ERROR);
-            session.invalidate();
+            accountBusiness.beforLogin(accountAndUser);//如果出错，抛出 LoginException 异常
+            accountAndUser = this.accountAndUserDao.login(accountAndUser);
+            if(isNotEmpty(accountAndUser.getLastLoginIp()) && !getIp(request).equals(accountAndUser.getLastLoginIp())){
+                accountAndUser.setLastLoginIp(getIp(request));
+                this.accountDao.updateIP(accountAndUser.accountGet());
+            }
+            log.info("加载用户信息成功，"+accountAndUser.toString());
+        } catch (LoginRegException e){
+            log.error("加载用户信息失败，"+accountAndUser.toString());
+            accountAndUser=null;
+        }catch (Exception e) {
+            log.error("加载用户信息失败，"+accountAndUser.toString());
+            hasError = true;
+            accountAndUser=null;
             e.printStackTrace();
+        } finally {
+            session.invalidate();
+            if(hasError){ session.setAttribute("error_msg", LOGIN_ERROR); }
+            session.setAttribute("userinfo",accountAndUser);
         }
         return accountAndUser;
     }
@@ -108,5 +121,17 @@ public class AccountServiceImpl extends BaseServiceImpl implements IAccountServi
      */
     public void insertUser(UserWithBLOBs user) {
         this.userDao.insert(user);
+    }
+
+    /**
+     * 查看用户信息
+     */
+    public String getUserInfo() {
+        String returnStr = session.getAttribute("userinfo")==null?"redirect:/":"showUser";
+        if("redirect:/".equals(returnStr)){
+            session.invalidate();
+            session.setAttribute("err_msg",LOGIN_PLEASE);
+        }
+        return returnStr;
     }
 }

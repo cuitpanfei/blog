@@ -8,7 +8,7 @@
     <result column="click_count" property="clickCount" jdbcType="INTEGER" />
     <result column="enabled" property="enabled" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.AdWithBLOBs" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.withblobs.AdWithBLOBs" extends="BaseResultMap" >
     <result column="link" property="link" jdbcType="LONGVARCHAR" />
     <result column="code" property="code" jdbcType="LONGVARCHAR" />
   </resultMap>
@@ -30,7 +30,7 @@
     delete from ad
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pf.blog.entity.AdWithBLOBs" >
+  <insert id="insert" parameterType="com.pf.blog.entity.withblobs.AdWithBLOBs" >
     insert into ad (id, media_type, name, 
       click_count, enabled, link, 
       code)
@@ -38,7 +38,7 @@
       #{clickCount,jdbcType=INTEGER}, #{enabled,jdbcType=VARCHAR}, #{link,jdbcType=LONGVARCHAR}, 
       #{code,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pf.blog.entity.AdWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.withblobs.AdWithBLOBs" >
     insert into ad
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -87,7 +87,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.AdWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.withblobs.AdWithBLOBs" >
     update ad
     <set >
       <if test="mediaType != null" >
@@ -111,7 +111,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.AdWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.withblobs.AdWithBLOBs" >
     update ad
     set media_type = #{mediaType,jdbcType=VARCHAR},
       name = #{name,jdbcType=VARCHAR},

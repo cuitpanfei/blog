@@ -1,5 +1,10 @@
 package com.pf.blog.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class Ad {
     private Integer id;
 
@@ -11,40 +16,13 @@ public class Ad {
 
     private String enabled;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getMediaType() {
-        return mediaType;
-    }
 
     public void setMediaType(String mediaType) {
         this.mediaType = mediaType == null ? null : mediaType.trim();
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
-    }
-
-    public Integer getClickCount() {
-        return clickCount;
-    }
-
-    public void setClickCount(Integer clickCount) {
-        this.clickCount = clickCount;
-    }
-
-    public String getEnabled() {
-        return enabled;
     }
 
     public void setEnabled(String enabled) {

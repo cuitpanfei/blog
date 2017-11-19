@@ -1,19 +1,9 @@
 package com.pf.blog.dao;
 
 import com.pf.blog.entity.Replay;
+import org.springframework.stereotype.Repository;
 
-public interface ReplayMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(Replay record);
-
-    int insertSelective(Replay record);
-
-    Replay selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(Replay record);
-
+@Repository
+public interface ReplayMapper extends IBaseDao<Replay>, IBaseSelectiveDao<Replay>{
     int updateByPrimaryKeyWithBLOBs(Replay record);
-
-    int updateByPrimaryKey(Replay record);
 }

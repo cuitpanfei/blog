@@ -6,7 +6,7 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="show_order" property="showOrder" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.FriendlyLinkWithBLOBs" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.withblobs.FriendlyLinkWithBLOBs" extends="BaseResultMap" >
     <result column="url" property="url" jdbcType="LONGVARCHAR" />
     <result column="logo" property="logo" jdbcType="LONGVARCHAR" />
   </resultMap>
@@ -28,13 +28,13 @@
     delete from friendly_link
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pf.blog.entity.FriendlyLinkWithBLOBs" >
+  <insert id="insert" parameterType="com.pf.blog.entity.withblobs.FriendlyLinkWithBLOBs" >
     insert into friendly_link (id, name, show_order, 
       url, logo)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{showOrder,jdbcType=VARCHAR}, 
       #{url,jdbcType=LONGVARCHAR}, #{logo,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pf.blog.entity.FriendlyLinkWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.withblobs.FriendlyLinkWithBLOBs" >
     insert into friendly_link
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -71,7 +71,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.FriendlyLinkWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.withblobs.FriendlyLinkWithBLOBs" >
     update friendly_link
     <set >
       <if test="name != null" >
@@ -89,7 +89,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.FriendlyLinkWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.withblobs.FriendlyLinkWithBLOBs" >
     update friendly_link
     set name = #{name,jdbcType=VARCHAR},
       show_order = #{showOrder,jdbcType=VARCHAR},

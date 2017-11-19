@@ -34,7 +34,7 @@
                     <div class="center">
                         <h1>
                             <i class="icon-leaf green"></i>
-                            <span class="red"><a style="text-decoration:none" href="./">简阅</a></span>
+                            <span class="red"><a style="text-decoration:none" href="">简阅</a></span>
                             <span class="white">网上短文</span>
                         </h1>
                         <h4 class="blue">&copy; Cuit-All-We Team</h4>
@@ -51,14 +51,14 @@
                                     <form method="post" action="${pageContext.request.contextPath}/user/login.action">
                                         <fieldset>
                                             <label class="block clearfix"> <span
-                                                    class="block input-icon input-icon-right"> <input name="email"
+                                                    class="block input-icon input-icon-right"> <input name="accountNumber"
                                                                                                       type="text"
                                                                                                       class="form-control"
-                                                                                                      placeholder="邮箱"/>
+                                                                                                      placeholder="邮箱/用户名"/>
                             <i class="icon-user"></i> </span> </label>
                                             <label class="block clearfix">
                                               <span class="block input-icon input-icon-right">
-                                                  <input name="password" type="password" class="form-control" placeholder="密&nbsp;&nbsp;&nbsp;码"/>
+                                                  <input name="accountPassword" type="password" class="form-control" placeholder="密&nbsp;&nbsp;&nbsp;码"/>
                                                   <i class="icon-lock" id="panfei" onmouseover="see()" onmouseout="nosee()"></i>
                                               </span>
                                             </label>
@@ -145,7 +145,7 @@
                                     <form action="${pageContext.request.contextPath}/user/reg.action" method="post" id="reg_form">
                                         <fieldset>
                                             <label class="block clearfix"> <span
-                                                    class="block input-icon input-icon-right"> <input type="email"
+                                                    class="block input-icon input-icon-right"> <input type="accountNumber"
                                                                                                       class="form-control"
                                                                                                       name="email"
                                                                                                       placeholder="邮箱"/> <i
@@ -155,7 +155,7 @@
                                                 placeholder="用户名"/> <i class="icon-user"></i> </span> </label> <label
                                                 class="block clearfix"> <span class="block input-icon input-icon-right"> <input
                                                 type="password"
-                                                class="form-control" name="password"
+                                                class="form-control" name="accountPassword"
                                                 placeholder="密&nbsp;&nbsp;&nbsp;码"/> <i class="icon-lock"
                                                                                         onmouseover="see()"
                                                                                         onmouseout="nosee()"></i> </span>

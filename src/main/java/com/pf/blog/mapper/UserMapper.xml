@@ -9,7 +9,7 @@
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="age" jdbcType="INTEGER" property="age" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pf.blog.entity.UserWithBLOBs">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.pf.blog.entity.withblobs.UserWithBLOBs">
     <result column="hobbies" jdbcType="LONGVARCHAR" property="hobbies" />
     <result column="birthday" jdbcType="LONGVARCHAR" property="birthday" />
   </resultMap>
@@ -39,7 +39,7 @@
     delete from user
     where userid = #{userid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pf.blog.entity.UserWithBLOBs">
+  <insert id="insert" parameterType="com.pf.blog.entity.withblobs.UserWithBLOBs">
     insert into user (userid, account_id, username, 
       sex, email, age, hobbies, 
       birthday)
@@ -47,7 +47,7 @@
       #{sex,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{hobbies,jdbcType=LONGVARCHAR}, 
       #{birthday,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pf.blog.entity.UserWithBLOBs">
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.withblobs.UserWithBLOBs">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userid != null">
@@ -102,7 +102,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.UserWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.withblobs.UserWithBLOBs">
     update user
     <set>
       <if test="accountId != null">
@@ -129,7 +129,7 @@
     </set>
     where userid = #{userid,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.UserWithBLOBs">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.withblobs.UserWithBLOBs">
     update user
     set account_id = #{accountId,jdbcType=INTEGER},
       username = #{username,jdbcType=VARCHAR},

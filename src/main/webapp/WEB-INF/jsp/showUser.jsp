@@ -10,64 +10,13 @@
     <meta name="Description" content=""><!--网页说明-->
     <title>CUITPF-Blog</title>
     <!--css样式引入标签-->
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/dist/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" type="text/css"
-          href="${pageContext.request.contextPath}/css/style.css"/>
-    <link rel="stylesheet"
-          href="${pageContext.request.contextPath}/css/theme.css"/>
-
-    <script src="${pageContext.request.contextPath}/dist/js/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        var user = "${userinfo.user.userName}";
-        var _contextPath = "${pageContext.request.contextPath}";
-    </script>
-    <script src="${pageContext.request.contextPath}/js/functions.js"></script>
-    <script src="${pageContext.request.contextPath}/js/utils.js"></script>
+    <!--css样式引入标签-->
+    <%@include file="/basePages/links.html"%>
+    <%@include file="/basePages/scripts.html"%>
+    <%@include file="/basePages/jalendarJS.html"%>
 </head>
 <body class="theme">
-<nav id="menu" class="navbar">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <ul class="nav navbar-nav pull-left">
-                    <li><img src="${pageContext.request.contextPath}/img/ico.png"
-                             width="48" height="48" alt="CUITPF-Blog"/></li>
-                    <li><a href="#">首页</a></li>
-                    <li><a href="#0">项目开发</a></li>
-                    <li><a href="#1">系列文章</a></li>
-                    <li><a href="#2">个人日志</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-6 col-md-6">
-                <ul id="no-login" class="nav navbar-nav pull-right">
-                    <li id="for-search"><input name="search" type="text"/> <i
-                            class="fa fa-search"></i></li>
-                    <li><a
-                            href="${pageContext.request.contextPath}/login.jsp?name=login-box"><i
-                            class="fa fa-user"></i>&nbsp;登录</a></li>
-                    <li><a href="${pageContext.request.contextPath}/login.jsp"><i
-                            class="fa fa-user-plus"></i>&nbsp;注册</a></li>
-                </ul>
-                <ul id="is-login" class="nav navbar-nav pull-right">
-                    <li id="for-search"><input name="search" type="text"/> <i
-                            class="fa fa-search"></i></li>
-                    <li id="user-info"><a
-                            href="${pageContext.request.contextPath}/user/userInfo.action"><i
-                            class="fa fa-user"></i>&nbsp;${userinfo.user.userName}</a></li>
-                    <li id="user-info"><a
-                            href="${pageContext.request.contextPath}/user/logout.action"><i
-                            class="fa fa-user"></i>注销</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</nav>
-
-
+<jsp:include page="/basePages/nav.jsp"/>
 <footer>
     <div class="contact-section">
         <div class="container">

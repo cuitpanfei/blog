@@ -1,7 +1,12 @@
 package com.pf.blog.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
+@Setter
+@Getter
 public class Article {
     private Integer id;
 
@@ -11,35 +16,4 @@ public class Article {
 
     private Integer articleTypeId;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Integer accountId) {
-        this.accountId = accountId;
-    }
-
-    public Date getArticleCreatTime() {
-        return articleCreatTime;
-    }
-
-    public void setArticleCreatTime(Date articleCreatTime) {
-        this.articleCreatTime = articleCreatTime;
-    }
-
-    public Integer getArticleTypeId() {
-        return articleTypeId;
-    }
-
-    public void setArticleTypeId(Integer articleTypeId) {
-        this.articleTypeId = articleTypeId;
-    }
 }

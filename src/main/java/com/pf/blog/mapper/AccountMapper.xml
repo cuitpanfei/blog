@@ -8,7 +8,7 @@
     <result column="user_power" property="userPower" jdbcType="VARCHAR" />
     <result column="user_register_time" property="userRegisterTime" jdbcType="TIMESTAMP" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.AccountWithBLOBs" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.withblobs.AccountWithBLOBs" extends="BaseResultMap" >
     <result column="account_number" property="accountNumber" jdbcType="LONGVARCHAR" />
     <result column="account_password" property="accountPassword" jdbcType="LONGVARCHAR" />
     <result column="Head_portrait" property="headPortrait" jdbcType="LONGVARCHAR" />
@@ -21,26 +21,18 @@
     account_number, account_password, Head_portrait, user_description
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from account
-    where account_id = #{accountId,jdbcType=INTEGER}
-  </select>
-  <select id="login" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from account
-    where account_number = #{accountNumber,jdbcType=LONGVARCHAR} and account_password = #{accountPassword,jdbcType=LONGVARCHAR}
+    where account_id = #{accountId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from account
     where account_id = #{accountId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pf.blog.entity.AccountWithBLOBs" >
+  <insert id="insert" parameterType="com.pf.blog.entity.withblobs.AccountWithBLOBs" >
     insert into account (account_id, last_login_ip, user_lock, 
       user_power, account_number,
       account_password, Head_portrait, 
@@ -50,7 +42,7 @@
       #{accountPassword,jdbcType=LONGVARCHAR}, #{headPortrait,jdbcType=LONGVARCHAR}, 
       #{userDescription,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pf.blog.entity.AccountWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.withblobs.AccountWithBLOBs" >
     insert into account
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="accountId != null" >
@@ -105,7 +97,14 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.AccountWithBLOBs" >
+  <update id="updateIP" parameterType="com.pf.blog.entity.withblobs.AccountWithBLOBs">
+    UPDATE account
+    <set>
+        last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+    </set>
+    where account_id = #{accountId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.withblobs.AccountWithBLOBs" >
     update account
     <set >
       <if test="lastLoginIp != null" >
@@ -135,7 +134,7 @@
     </set>
     where account_id = #{accountId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.AccountWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.withblobs.AccountWithBLOBs" >
     update account
     set last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
       user_lock = #{userLock,jdbcType=CHAR},

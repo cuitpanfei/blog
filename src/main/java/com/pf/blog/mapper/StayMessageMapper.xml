@@ -6,7 +6,7 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="ipv4_info" property="ipv4Info" jdbcType="VARCHAR" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.StayMessageWithBLOBs" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.withblobs.StayMessageWithBLOBs" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
     <result column="Email" property="email" jdbcType="LONGVARCHAR" />
   </resultMap>
@@ -28,13 +28,13 @@
     delete from stay_message
     where stay_message_id = #{stayMessageId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pf.blog.entity.StayMessageWithBLOBs" >
+  <insert id="insert" parameterType="com.pf.blog.entity.withblobs.StayMessageWithBLOBs" >
     insert into stay_message (stay_message_id, create_time, ipv4_info, 
       content, Email)
     values (#{stayMessageId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{ipv4Info,jdbcType=VARCHAR}, 
       #{content,jdbcType=LONGVARCHAR}, #{email,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.pf.blog.entity.StayMessageWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.withblobs.StayMessageWithBLOBs" >
     insert into stay_message
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="stayMessageId != null" >
@@ -71,7 +71,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.StayMessageWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.withblobs.StayMessageWithBLOBs" >
     update stay_message
     <set >
       <if test="createTime != null" >
@@ -89,7 +89,7 @@
     </set>
     where stay_message_id = #{stayMessageId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.StayMessageWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.withblobs.StayMessageWithBLOBs" >
     update stay_message
     set create_time = #{createTime,jdbcType=TIMESTAMP},
       ipv4_info = #{ipv4Info,jdbcType=VARCHAR},

@@ -1,19 +1,12 @@
 package com.pf.blog.dao;
 
 import com.pf.blog.entity.Article;
-import com.pf.blog.entity.ArticleWithBLOBs;
+import com.pf.blog.entity.withblobs.ArticleWithBLOBs;
+import org.springframework.stereotype.Repository;
 
-public interface ArticleMapper {
-    int deleteByPrimaryKey(Integer id);
-
-    int insert(ArticleWithBLOBs record);
-
-    int insertSelective(ArticleWithBLOBs record);
-
-    ArticleWithBLOBs selectByPrimaryKey(Integer id);
-
-    int updateByPrimaryKeySelective(ArticleWithBLOBs record);
-
+@Repository
+public interface ArticleMapper extends IBaseSelectiveDao<ArticleWithBLOBs>,IBaseDao<ArticleWithBLOBs>{
+    
     int updateByPrimaryKeyWithBLOBs(ArticleWithBLOBs record);
 
     int updateByPrimaryKey(Article record);

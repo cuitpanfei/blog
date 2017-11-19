@@ -1,14 +1,13 @@
 package com.pf.blog.bean;
 
-import com.pf.blog.entity.Account;
-import com.pf.blog.entity.AccountWithBLOBs;
-import com.pf.blog.entity.User;
-import com.pf.blog.entity.UserWithBLOBs;
+import com.pf.blog.entity.withblobs.AccountWithBLOBs;
+import com.pf.blog.entity.withblobs.UserWithBLOBs;
 
-import static com.pf.blog.util.FormatUtil.ObjToJson;
+import static com.pf.util.FormatUtil.ObjToJson;
 
 /**
- * Created by Administrator on 2017/10/23.
+ * accountWithBLOBs 与 userWithBLOBs
+ * Created by cuitpanfei on 2017/10/23.
  */
 public class AccountAndUser {
     private AccountWithBLOBs account;
@@ -38,7 +37,7 @@ public class AccountAndUser {
     public String toString() {
         return "{"+
                 "account:"+ObjToJson(account)+","+
-                "user:"+ObjToJson(user)+","
+                "user:"+ObjToJson(user)
         +"}";
     }
 }

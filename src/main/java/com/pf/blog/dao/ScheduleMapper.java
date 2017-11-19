@@ -1,26 +1,19 @@
 package com.pf.blog.dao;
 
 import com.pf.blog.entity.Schedule;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.util.List;
 
 @Repository
-public interface ScheduleMapper {
-    int deleteByPrimaryKey(Integer scheduleId);
-
-    int insert(Schedule record);
-
-    int insertSelective(Schedule record);
-
-    Schedule selectByPrimaryKey(Integer scheduleId);
-
-    int updateByPrimaryKeySelective(Schedule record);
+public interface ScheduleMapper extends IBaseDao<Schedule>,IBaseSelectiveDao<Schedule> {
 
     int updateByPrimaryKeyWithBLOBs(Schedule record);
 
-    int updateByPrimaryKey(Schedule record);
-
     List<Schedule> selectOneUserAllEvents(Integer id);
+
+    /** 清空当前用户的所有Schedule */
+    void removeAll(@Param("accountId") Integer accountId);
 }

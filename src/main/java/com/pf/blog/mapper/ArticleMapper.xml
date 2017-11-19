@@ -7,7 +7,7 @@
     <result column="article_creat_time" property="articleCreatTime" jdbcType="TIMESTAMP" />
     <result column="article_type_id" property="articleTypeId" jdbcType="INTEGER" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.ArticleWithBLOBs" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.pf.blog.entity.withblobs.ArticleWithBLOBs" extends="BaseResultMap" >
     <result column="article_title" property="articleTitle" jdbcType="LONGVARCHAR" />
     <result column="article_content" property="articleContent" jdbcType="LONGVARCHAR" />
   </resultMap>
@@ -17,6 +17,16 @@
   <sql id="Blob_Column_List" >
     article_title, article_content
   </sql>
+  <select id="selectBySearch" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+    SELECT
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    FROM article
+    WHERE
+      article_title like CONCAT('%', #{mkName}, '%')
+      or article_content like CONCAT('%', #{mkName}, '%')
+  </select>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
@@ -29,7 +39,7 @@
     delete from article
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.pf.blog.entity.ArticleWithBLOBs" >
+  <insert id="insert" parameterType="com.pf.blog.entity.withblobs.ArticleWithBLOBs" >
     insert into article (id, account_id, article_creat_time, 
       article_type_id, article_title, article_content
       )
@@ -37,7 +47,7 @@
       #{articleTypeId,jdbcType=INTEGER}, #{articleTitle,jdbcType=LONGVARCHAR}, #{articleContent,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.pf.blog.entity.ArticleWithBLOBs" >
+  <insert id="insertSelective" parameterType="com.pf.blog.entity.withblobs.ArticleWithBLOBs" >
     insert into article
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -80,7 +90,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.ArticleWithBLOBs" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.pf.blog.entity.withblobs.ArticleWithBLOBs" >
     update article
     <set >
       <if test="accountId != null" >
@@ -101,7 +111,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.ArticleWithBLOBs" >
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.pf.blog.entity.withblobs.ArticleWithBLOBs" >
     update article
     set account_id = #{accountId,jdbcType=INTEGER},
       article_creat_time = #{articleCreatTime,jdbcType=TIMESTAMP},

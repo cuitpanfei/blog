@@ -1,8 +1,10 @@
 package com.pf.blog.dao;
 
 import com.pf.blog.entity.Ad;
-import com.pf.blog.entity.AdWithBLOBs;
+import com.pf.blog.entity.withblobs.AdWithBLOBs;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface AdMapper {
     int deleteByPrimaryKey(Integer id);
 

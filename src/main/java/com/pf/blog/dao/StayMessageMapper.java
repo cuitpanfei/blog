@@ -1,8 +1,10 @@
 package com.pf.blog.dao;
 
 import com.pf.blog.entity.StayMessage;
-import com.pf.blog.entity.StayMessageWithBLOBs;
+import com.pf.blog.entity.withblobs.StayMessageWithBLOBs;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface StayMessageMapper {
     int deleteByPrimaryKey(Integer stayMessageId);
 
